@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<blueprint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+    xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd" >
+
+	<reference
+		id="additionServiceInterface"
+		interface="tk.drwrong.service.addition.IAdditionSvc">
+	</reference>
+
+	<reference
+		id="substractionServiceInterface"
+		interface="tk.drwrong.service.substraction.ISubstractionSvc">
+	</reference>
+
+	<bean
+		id="clientBean"
+		class="tk.drwrong.service.inter.Client"
+		init-method="init">
+		<property
+			name="additionSvc"
+			ref="additionServiceInterface"/>
+		<property
+			name="subtractionSvc"
+			ref="substractionServiceInterface"/>
+	</bean>
+
+</blueprint>
