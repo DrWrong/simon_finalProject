@@ -36,7 +36,7 @@ public class Client  implements RestService{
 	public String handleGet(Integer a, Integer b) {
 		int convert = additionSvc.convert(a);
 		int res = subtractionSvc.substract(b, convert);
-		return Integer.toString(res);
+		return  "<message><result>"+res+"</result></message>";
 	}
 
 }
