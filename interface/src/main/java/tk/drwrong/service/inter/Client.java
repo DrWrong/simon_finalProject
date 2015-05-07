@@ -3,7 +3,7 @@ package tk.drwrong.service.inter;
 import tk.drwrong.service.addition.IAdditionSvc;
 import tk.drwrong.service.substraction.ISubstractionSvc;
 
-public class Client {
+public class Client  implements RestService{
 	private IAdditionSvc additionSvc;
 	private ISubstractionSvc subtractionSvc;
 
@@ -31,6 +31,12 @@ public class Client {
 		} else{
 			System.out.println("Null reference to server");
 		}
+	}
+
+	public String handleGet(Integer a, Integer b) {
+		int convert = additionSvc.convert(a);
+		int res = subtractionSvc.substract(b, convert);
+		return Integer.toString(res);
 	}
 
 }

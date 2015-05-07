@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <blueprint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
-    xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd" >
+    xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0"
+    xmlns:jaxws="http://cxf.apache.org/blueprint/jaxws"
+    xmlns:jaxrs="http://cxf.apache.org/blueprint/jaxrs"
+    xmlns:cxf="http://cxf.apache.org/blueprint/core"
+    xsi:schemaLocation="
+    http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+    http://cxf.apache.org/blueprint/jaxws http://cxf.apache.org/schemas/blueprint/jaxws.xsd
+  	http://cxf.apache.org/blueprint/jaxrs http://cxf.apache.org/schemas/blueprint/jaxrs.xsd
+  	http://cxf.apache.org/blueprint/core http://cxf.apache.org/schemas/blueprint/core.xsd" >
 
+    
 	<reference
 		id="additionServiceInterface"
 		interface="tk.drwrong.service.addition.IAdditionSvc">
@@ -13,6 +22,9 @@
 		interface="tk.drwrong.service.substraction.ISubstractionSvc">
 	</reference>
 
+    <bean id="cxfServlet" class="org.apache.cxf.transport.servlet.CXFServlet" />
+ 
+    <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
 	<bean
 		id="clientBean"
 		class="tk.drwrong.service.inter.Client"
@@ -24,5 +36,19 @@
 			name="subtractionSvc"
 			ref="substractionServiceInterface"/>
 	</bean>
+	<!-- 1 -->  
+    <cxf:bus id="cxfBus1">
+        <cxf:features>
+            <cxf:logging/>
+        </cxf:features>
+    </cxf:bus>
+
+<!-- 2 -->  
+    <jaxrs:server address="/karafsimple" id="someRestService">
+        <jaxrs:serviceBeans>
+            <ref component-id="clientBean"/>
+        </jaxrs:serviceBeans>
+    </jaxrs:server>
+
 
 </blueprint>
